@@ -59,10 +59,10 @@ Edit `/etc/hosts` on both servers:
 
 ```bash
 # On server1
-sudo mkdir -p /glusterfs/brick1/vmail
+sudo mkdir -p /data/brick1/vmail
 
 # On server2
-sudo mkdir -p /glusterfs/brick1/vmail
+sudo mkdir -p /data1/brick1/vmail
 ```
 
 > These must be empty and ideally on dedicated partitions (e.g., 1.5 TB disks).
@@ -87,16 +87,16 @@ sudo gluster peer status
 
 ```bash
 sudo gluster volume create gv0 replica 2 \
-  server1:/glusterfs/brick1/vmail \
-  server2:/glusterfs/brick1/vmail
+  server1:/data/brick1/vmail \
+  server2:/data1/brick1/vmail
 ```
 
 (Optional) Add `transport tcp` explicitly:
 
 ```bash
 sudo gluster volume create gv0 replica 2 transport tcp \
-  server1:/glusterfs/brick1/vmail \
-  server2:/glusterfs/brick1/vmail
+  server1:/data/brick1/vmail \
+  server2:/data1/brick1/vmail
 ```
 
 ---
