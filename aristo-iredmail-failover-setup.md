@@ -203,7 +203,7 @@ server-id                   = 2
 ### Step 2: Create replication user (both servers)
 
 ```sql
-CREATE USER 'repl'@'%' IDENTIFIED BY 'Sys1adm';
+CREATE USER 'replicator'@'%' IDENTIFIED BY 'Sys1adm';
 GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%';
 FLUSH PRIVILEGES;
 ```
@@ -221,7 +221,7 @@ On Server 1:
 ```sql
 CHANGE MASTER TO
   MASTER_HOST='10.10.11.156',
-  MASTER_USER='repl',
+  MASTER_USER='replicator',
   MASTER_PASSWORD='Sys1adm',
   MASTER_LOG_FILE='mysql-bin.00000X',
   MASTER_LOG_POS=XXXX;
@@ -233,7 +233,7 @@ On Server 2:
 ```sql
 CHANGE MASTER TO
   MASTER_HOST='10.10.11.155',
-  MASTER_USER='repl',
+  MASTER_USER='replicator',
   MASTER_PASSWORD='Sys1adm',
   MASTER_LOG_FILE='mysql-bin.00000X',
   MASTER_LOG_POS=XXXX;
