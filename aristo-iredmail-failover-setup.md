@@ -214,7 +214,7 @@ FLUSH PRIVILEGES;
 SHOW MASTER STATUS;
 ```
 
-### Step 4: Configure each server as a slave of the other
+### Step 4: Configure each server as a slave of the other for according to the master's status
 
 On Server 1:
 
