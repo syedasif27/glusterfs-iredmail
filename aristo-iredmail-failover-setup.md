@@ -85,7 +85,7 @@ sudo bash iRedMail.sh
 
 ## 3. LDAP Master-Slave Replication
 
-### On Master: `aristo1.fcoos.in`
+### On Master: `aristo2.fcoos.in`
 
 Ensure in `/etc/ldap/slapd.conf`:
 
@@ -105,13 +105,13 @@ add: olcAccess
 olcAccess: to * by dn="cn=vmail,dc=aristo1,dc=fcoos,dc=in" read by * break
 ```
 
-### On Slave: `aristo2.fcoos.in`
+### On Slave: `aristo1.fcoos.in`
 
 Add to `/etc/ldap/slapd.conf`:
 
 ```conf
 syncrepl rid=001
-  provider=ldap://10.10.11.155:389
+  provider=ldap://10.10.11.156:389
   searchbase="dc=aristo,dc=fcoos,dc=in"
   bindmethod=simple
   binddn="cn=vmail,dc=aristo,dc=fcoos,dc=in"
@@ -136,7 +136,7 @@ systemctl restart slapd
 
 ### Step 1: Edit MariaDB Config
 
-#### Server 1 `/etc/mysql/my.cnf`
+#### Server 1 `/etc/mysql/my.cnf` 10.10.11.155
 
 ```ini
 [mysqld]
@@ -168,7 +168,7 @@ server-id                   = 1
 
 ```
 
-#### Server 2 `/etc/mysql/my.cnf`
+#### Server 2 `/etc/mysql/my.cnf`  10.10.11.156
 
 ```ini
 [mysqld]
@@ -216,7 +216,7 @@ SHOW MASTER STATUS;
 
 ### Step 4: Configure each server as a slave of the other for according to the master's status
 
-On Server 1:
+On Server aristo1:
 
 ```sql
 CHANGE MASTER TO
@@ -228,7 +228,7 @@ CHANGE MASTER TO
 START SLAVE;
 ```
 
-On Server 2:
+On Server aristo2:
 
 ```sql
 CHANGE MASTER TO
